@@ -1,10 +1,20 @@
 const express = require("express")
 const { connectDB } = require("./config/database")
 const app = express()
+const cors = require("cors")
 require("dotenv").config()
 const PORT = process.env.PORT
 
+
+
+
 app.use(express.json())
+app.use(cors({
+    origin: 'http://localhost:7878',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
+    credentials: true,
+    optionsSuccessStatus: 200
+}));
 
 
 const categoryRouter = require("./router/category.router")
