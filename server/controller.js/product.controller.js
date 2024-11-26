@@ -6,7 +6,7 @@ const { default: mongoose } = require("mongoose");
 const createProduct = async (req, res) => {
     try {
         validateProduct(req)
-        const { categoryId, name, description, price, images, fabricType, stock } = req.body;
+        const { categoryId, name, description, price, images, fabricType, discount, stock } = req.body;
 
         const categoryExists = await Category.findById(categoryId);
         if (!categoryExists) {
@@ -19,6 +19,7 @@ const createProduct = async (req, res) => {
             description,
             price,
             images,
+            discount,
             fabricType,
             stock
         });
@@ -39,9 +40,13 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
+    const { page = 1, limit = 12 } = req.query
+
     try {
         const products = await Product.find()
-            .populate("categoryId", "name description categoryImage");
+            .populate("categoryId", "name description categoryImage")
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit));
         res.status(200).json({
             success: true,
             message: "products fetched successfully!",
@@ -123,6 +128,33 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const newArrivals = async (req, res) => {
+    const { page = 1, limit = 12 } = req.query;
+    try {
+        const products = await Product.find({ newArrival: true })
+            .skip((page - 1) * limit)
+            .limit(parseInt(limit));
+
+        const totalProducts = await Product.countDocuments({ newArrival: true });
+
+        res.status(200).json({
+            success: true,
+            message: "New arrivals fetched successfully!",
+            totalProducts: totalProducts,
+            currentPage: parseInt(page),
+            totalPages: Math.ceil(totalProducts / limit),
+            data: products,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Error fetching new arrivals.",
+            error: error.message,
+        });
+    }
+};
+
+
 // update is pending 
 
 module.exports = {
@@ -130,5 +162,6 @@ module.exports = {
     getAllProducts,
     getProductById,
     deleteProduct,
-    deleteProduct
+    deleteProduct,
+    newArrivals
 }

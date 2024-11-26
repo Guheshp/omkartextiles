@@ -48,6 +48,15 @@ const productSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, "Fabric type cannot exceed 50 characters"]
     },
+    discount: {
+        type: Number,
+        min: [0, "Stock cannot be negative"],
+        default: 0
+    },
+    newArrival: {
+        type: Boolean,
+        default: false
+    },
     stock: {
         type: Number,
         required: [true, "Stock is required"],

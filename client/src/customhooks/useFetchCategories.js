@@ -9,7 +9,7 @@ const useFetchCategories = () => {
     const fetchCategories = async () => {
         setLoad(true);
         try {
-            const res = await axios.get(BASE_URL + 'getallcategory')
+            const res = await axios.get(BASE_URL + 'getallcategorieswithproduct')
             const data = res?.data?.data
             setCategories(data)
         } catch (error) {

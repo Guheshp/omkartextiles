@@ -6,6 +6,7 @@ router.post("/newcategory", categoryController.newCategory)
 router.get("/getallcategory", categoryController.getAllCategories)
 router.get("/getcategorybyid/:_id", categoryController.getCategoryByID)
 router.get("/getallproductsbycategoryId/:_id", categoryController.getAllProductsByCategoryId)
+router.get("/getallcategorieswithproduct", categoryController.getAllCategorieswithProduct)
 
 
 

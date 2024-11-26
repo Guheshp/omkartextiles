@@ -136,11 +136,51 @@ const getAllProductsByCategoryId = async (req, res) => {
     }
 };
 
+const getAllCategorieswithProduct = async (req, res) => {
+    try {
+        // Aggregation to fetch categories with total product count
+        const allCategories = await Category.aggregate([
+            {
+                $lookup: {
+                    from: "products", // MongoDB collection name for products
+                    localField: "_id", // Field in the Category model
+                    foreignField: "categoryId", // Field in the Product model
+                    as: "products", // Alias for the joined data
+                },
+            },
+            {
+                $project: {
+                    name: 1,
+                    description: 1,
+                    categoryImage: 1,
+                    totalProducts: { $size: "$products" }, // Count of products in each category
+                },
+            },
+        ]);
+
+        // Response with success
+        res.status(200).json({
+            success: true,
+            message: "Categories fetched successfully!",
+            totalCategory: allCategories.length,
+            data: allCategories,
+        });
+    } catch (error) {
+        // Error handling
+        res.status(500).json({
+            success: false,
+            message: "Error in fetching categories.",
+            error: error.message,
+        });
+    }
+};
+
 // should do update, delete 
 
 module.exports = {
     newCategory,
     getAllCategories,
     getCategoryByID,
-    getAllProductsByCategoryId
+    getAllProductsByCategoryId,
+    getAllCategorieswithProduct
 }

@@ -1,10 +1,7 @@
-import React from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
-import { BsBagCheckFill } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-const ProductCard = ({ product }) => {
-
+const NewArrivalCard = ({ product }) => {
     const totalAmount = (amount, discount) => {
         if (!amount || !discount) return amount;
         const discountAmount = (amount * discount) / 100;
@@ -19,7 +16,6 @@ const ProductCard = ({ product }) => {
             maximumFractionDigits: 0
         }).format(price);
     };
-
 
     return (
         <div className="rounded-lg hover:shadow-lg transition duration-200 max-w-xs  w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
@@ -54,22 +50,7 @@ const ProductCard = ({ product }) => {
                 </div>
             </Link>
         </div>
-
-    );
-};
-
-export function NewArrivals({ product, ...props }) {
-    return (
-        <div className="relative">
-            {product?.newArrival && (
-                <label className="absolute bg-darkcolor1 text-white p-1 m-1 rounded-lg text-sm top-0 left-0 z-10">New Arrivals</label>
-            )}
-            <ProductCard product={product} {...props} />
-        </div>
-    );
+    )
 }
 
-
-export default ProductCard;
-
-
+export default NewArrivalCard
