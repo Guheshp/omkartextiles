@@ -5,7 +5,7 @@ import Pagination from './Pagination';
 
 const AllProducts = () => {
     const { allProducts, load, totalProducts, page, setPage } = useAllProducts();
-    console.log('allProducts', allProducts);
+    // console.log('allProducts', allProducts);
 
     if (load) return <h1 className="text-center text-xl font-semibold my-5">Loading...</h1>;
 

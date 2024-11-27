@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import logo from './logo.svg';
 import AllProducts from './components/AllProducts';
@@ -7,8 +7,13 @@ import CategoryProducts from './components/CategoryProducts';
 import { NewArrivals } from './components/ProductCard';
 import NewArrivalsProducts from './components/NewArrivalsProducts';
 import Footer from './components/Footer';
+import ProductDetails from './components/ProductDetails';
+import productsRoutes from './routes/productsRoutes';
+import SingleProduct from './components/SingleProduct';
 
 function Main() {
+  const location = useLocation();
+  const isProductDetailsRoute = location.pathname.startsWith('/productdetails');
   return (
     <div>
       <div className="border px-0 md:px-10 lg:px-20 sm:px-0">
@@ -18,9 +23,6 @@ function Main() {
       </div>
       <Footer />
     </div>
-
-
-
   )
 }
 
@@ -37,10 +39,13 @@ const appRouter = createBrowserRouter([{
       element: <CategoryProducts />
     },
     {
+      path: "/product/:id",
+      element: <SingleProduct />
+    },
+    {
       path: "/newarrivals",
       element: <NewArrivalsProducts />
     },
-
   ]
 }])
 

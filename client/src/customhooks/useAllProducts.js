@@ -11,7 +11,9 @@ const useAllProducts = () => {
     const fetchAllProducts = async () => {
         setLoad(true)
         try {
-            const res = await axios.get(BASE_URL + "getallproduct?limit=100")
+            const res = await axios.get(BASE_URL + "getallproduct", {
+                params: { page: 1, limit: 100 },
+            });
             const data = res?.data?.data
             const totalProducts = res?.data?.totalProducts
             srtTotalProducts(totalProducts)
@@ -26,7 +28,7 @@ const useAllProducts = () => {
     useEffect(() => {
         fetchAllProducts()
     }, [])
-    return { allProducts, totalProducts, load, page, setPage }
+    return { fetchAllProducts, allProducts, totalProducts, load, page, setPage }
 }
 
 export default useAllProducts

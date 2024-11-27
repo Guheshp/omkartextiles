@@ -2,9 +2,14 @@ import React from 'react';
 import { FaShoppingCart } from 'react-icons/fa';
 import { BsBagCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from '../redux/slices/cartSlice';
 
 const ProductCard = ({ product }) => {
 
+    const dispatch = useDispatch()
+    const cartItems = useSelector((store) => store.cart.items)
+    const isInCart = cartItems.some((item) => item._id === product._id);
     const totalAmount = (amount, discount) => {
         if (!amount || !discount) return amount;
         const discountAmount = (amount * discount) / 100;
@@ -20,10 +25,14 @@ const ProductCard = ({ product }) => {
         }).format(price);
     };
 
+    const handleCart = (item) => {
+        console.log(item)
+        dispatch(addCart(item))
+    }
 
     return (
         <div className="rounded-lg hover:shadow-lg transition duration-200 max-w-xs  w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
-            <Link to={`/products/${product?._id}`}>
+            <Link to={`/product/${product?._id}`}>
                 <img
                     className="w-full object-cover rounded-md"
                     src="https://royalanarkali.com/wp-content/uploads/2024/03/Adorable-Blue-Color-Lichi-Silk-Gold-And-Silver-Zari-Weaving-Saree-scaled.jpeg"
@@ -44,15 +53,31 @@ const ProductCard = ({ product }) => {
                         <del className="text-gray-400">
                             <p className="text-[13px] text-gray-400">{formatPrice(product?.price)}</p>
                         </del>
-                        <p className="text-[13px] text-red-400">({product?.discount}% off)</p>
+                        <p className="text-[13px] text-red-400">({product?.discount}% off)
+                        </p>
                     </div>
                 </div>
-                <div className="text-center">
-                    <button className="p-1 px-2 border border-gray-500 m-3 bg-color1 font-medium rounded hover:bg-darkcolor1 hover:text-white">
-                        Add to cart
-                    </button>
-                </div>
             </Link>
+            <div className="text-center">
+                {isInCart ? (
+                    <div className="text-sm p-1 px-2">
+                        <span className="text-green-500 font-medium">✔ Added to Cart</span>
+                        <Link className="btn btn-primary btn-sm p-1 m-1" to="/cart">
+                            View Cart
+                        </Link>
+                    </div>
+                ) : (
+                    <button
+                        className="p-1 px-2 border border-gray-500 m-3 bg-color1 font-medium rounded hover:bg-darkcolor1 hover:text-white"
+                        onClick={() => handleCart(product)}
+                    >
+                        Add to Cart
+                    </button>
+                )}
+
+
+            </div>
+
         </div>
 
     );

@@ -40,10 +40,19 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-    const { page = 1, limit = 12 } = req.query
+    const { page = 1, limit = 12, search = "" } = req.query
+
+    const searchFilter = search
+        ? {
+            $or: [
+                { name: { $regex: search, $options: "i" } },
+                { fabricType: { $regex: search, $options: "i" } },
+            ],
+        }
+        : {};
 
     try {
-        const products = await Product.find()
+        const products = await Product.find(searchFilter)
             .populate("categoryId", "name description categoryImage")
             .skip((page - 1) * limit)
             .limit(parseInt(limit));
