@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { RiSecurePaymentFill } from "react-icons/ri";
 import { SlBadge } from "react-icons/sl";
 import { PiShippingContainerDuotone } from "react-icons/pi";
+import { MdContentCopy } from "react-icons/md";
 
 const SingleProductDetails = ({ productData }) => {
 
@@ -65,22 +66,42 @@ const SingleProductDetails = ({ productData }) => {
             <div>
                 <p className="font-semibold text-sm sm:text-base">Quantity</p>
                 <div className="py-3 flex items-center">
-                    <button className="border p-2 sm:p-3">-</button>
-                    <span className="border px-4 py-2 sm:py-3">1</span>
-                    <button className="border p-2 sm:p-3">+</button>
+                    <button className="border p-2 sm:p-2">-</button>
+                    <span className="border px-4 py-2 sm:py-2">1</span>
+                    <button className="border p-2 sm:p-2">+</button>
                 </div>
             </div>
 
             <div className="my-4 flex flex-col sm:flex-row gap-3">
-                <Link className="border border-black p-3 sm:px-20 text-sm sm:text-md rounded-xl bg-color1 hover:bg-darkcolor1 font-semibold hover:text-white text-center">
+                <Link className="border border-black p-3 sm:px-[69px] text-sm sm:text-md rounded-xl bg-color1 hover:bg-darkcolor1 font-semibold hover:text-white text-center">
                     Add to Cart
                 </Link>
-                <Link className="border p-3 sm:px-20 text-white text-sm sm:text-md border-black rounded-xl bg-darkcolor1 hover:bg-opacity-95 font-semibold text-center">
+                <Link className="border p-3 sm:px-[69px] text-white text-sm sm:text-md border-black rounded-xl bg-darkcolor1 hover:bg-opacity-95 font-semibold text-center">
                     Buy Now
                 </Link>
             </div>
+            <hr />
 
-            <div className="mt-12 bg-color1 p-4">
+            <div className="py-3">
+                <p className="font-semibold text-sm sm:text-base">BEST COUPON FOR YOU</p>
+
+                <div className="flex flex-col sm:flex-row border gap-4 sm:gap-5 justify-between rounded-xl p-3">
+
+                    <div className="flex-1">
+                        <p className="text-sm sm:text-base font-bold">Flat 15% off above ₹9999/-</p>
+                        <p className="text-xs sm:text-sm">Discount applicable at checkout</p>
+                    </div>
+
+                    <div className="border border-dotted border-black m-2 sm:m-0 p-2 sm:p-3 rounded-md flex items-center justify-center">
+                        <p className="flex items-center gap-2 text-sm sm:text-base">
+                            OMKAR98765 <MdContentCopy className="cursor-pointer" />
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div className="mt-7 bg-color1 p-4">
                 <p className="text-center text-sm font-semibold">YOUR SAFETY IS OUR PRIORITY</p>
                 <div className="flex flex-col sm:flex-row justify-around items-center p-3 gap-4">
                     <div className="text-center">

@@ -7,6 +7,23 @@ const SingleProductImages = ({ productData }) => {
     const images = [DUMMY_IMG1, DUMMY_IMG2, DUMMY_IMG3, DUMMY_IMG4];
     const [mainImage, setMainImage] = useState(images[0]);
 
+    const [zoomData, setZoomData] = useState({ backgroundPosition: '0% 0%', isZooming: false });
+
+    const handleMouseMove = (e) => {
+        const { left, top, width, height } = e.target.getBoundingClientRect();
+        const x = ((e.clientX - left) / width) * 100; // Percentage across the width
+        const y = ((e.clientY - top) / height) * 100; // Percentage across the height
+        setZoomData({
+            backgroundPosition: `${x}% ${y}%`,
+            isZooming: true,
+        });
+    };
+
+    const handleMouseLeave = () => {
+        setZoomData({ backgroundPosition: '0% 0%', isZooming: false });
+    };
+
+
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
@@ -18,9 +35,7 @@ const SingleProductImages = ({ productData }) => {
     };
     return (
         <div>
-            {/* Desktop View */}
             <div className="hidden md:flex flex-col md:flex-row gap-4 items-center md:items-start">
-                {/* Side list of images */}
                 <div className="flex flex-row md:flex-col gap-2">
                     {images.map((image, index) => (
                         <img
@@ -37,13 +52,26 @@ const SingleProductImages = ({ productData }) => {
                     ))}
                 </div>
 
-                {/* Main image display */}
                 <img
-                    className="w-full sm:w-[90%] md:w-[75%] border-2 border-gray-300 rounded-md"
+                    className="w-full cursor-pointer sm:w-[90%] md:w-[75%] border-2 border-gray-300 rounded-md"
                     src={mainImage}
                     alt="Main"
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
                 />
             </div>
+
+            {zoomData.isZooming && (
+                <div
+                    className="absolute top-20 left-[60%] w-96 h-96 border-2 border-gray-300 rounded-md bg-no-repeat bg-cover"
+                    style={{
+                        backgroundImage: `url(${mainImage})`,
+                        backgroundPosition: zoomData.backgroundPosition,
+                        backgroundSize: '200%', // Adjust zoom level
+                    }}
+                ></div>
+            )}
+
 
             {/* Mobile View */}
             <div className="flex flex-col items-center gap-4 w-full md:hidden">
