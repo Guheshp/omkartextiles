@@ -31,7 +31,7 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div className="rounded-lg hover:shadow-lg transition duration-200 max-w-xs  w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
+        <div className="rounded-lg hover:shadow-2xl transition duration-200 max-w-xs  w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
             <Link to={`/product/${product?._id}`}>
                 <img
                     className="w-full object-cover rounded-md"
@@ -61,8 +61,8 @@ const ProductCard = ({ product }) => {
             <div className="text-center">
                 {isInCart ? (
                     <div className="text-sm p-1 px-2">
-                        <span className="text-green-500 font-medium">✔ Added to Cart</span>
-                        <Link className="btn btn-primary btn-sm p-1 m-1" to="/cart">
+                        <Link className="btn btn-primary btn-sm" to="/cart">
+                            <span className="text-green-500 font-medium">✔ Added to Cart</span>
                             View Cart
                         </Link>
                     </div>
@@ -74,10 +74,7 @@ const ProductCard = ({ product }) => {
                         Add to Cart
                     </button>
                 )}
-
-
             </div>
-
         </div>
 
     );

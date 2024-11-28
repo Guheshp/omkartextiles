@@ -4,8 +4,19 @@ import { RiSecurePaymentFill } from "react-icons/ri";
 import { SlBadge } from "react-icons/sl";
 import { PiShippingContainerDuotone } from "react-icons/pi";
 import { MdContentCopy } from "react-icons/md";
+import { useDispatch, useSelector } from 'react-redux';
+import { addCart } from '../redux/slices/cartSlice';
 
 const SingleProductDetails = ({ productData }) => {
+    const newArrival = productData?.newArrival
+    const dispatch = useDispatch()
+    const cartItems = useSelector((store) => store.cart.items)
+    const isInCart = cartItems.some((item) => item._id === productData._id);
+
+    const handleCart = (item) => {
+        console.log(item)
+        dispatch(addCart(item))
+    }
 
     const totalAmount = (amount, discount) => {
         if (!amount || !discount) return amount;
@@ -22,10 +33,13 @@ const SingleProductDetails = ({ productData }) => {
         }).format(price);
     };
     return (
-        <div className="p-4">
+        <div className="p-1 sm:p-2 md:p-4">
+            {newArrival && (
+                <p className=" bg-color1 inline-block text-black px-2 rounded-lg text-sm top-0 left-0 z-10">{newArrival ? "New Arrival" : null}</p>
+            )}
             <h1 className="text-xl sm:text-2xl md:text-3xl font-medium">{productData?.name}</h1>
 
-            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mt-3">
+            <div className="flex flex-row items-center sm:flex gap-3 sm:items-center mt-3">
                 <p className="text-lg sm:text-xl font-bold text-black">
                     {formatPrice(totalAmount(productData?.price, productData?.discount))}
                 </p>
@@ -43,7 +57,8 @@ const SingleProductDetails = ({ productData }) => {
                     UPI & Card Payment Accepted <span>Powered by Razorpay</span>
                 </p>
             </div>
-            <div className="my-5">
+
+            <div className="my-3">
                 <hr />
                 <div className="space-y-2">
                     <p className="flex items-center gap-2 text-xs sm:text-sm my-1">
@@ -63,19 +78,47 @@ const SingleProductDetails = ({ productData }) => {
                 </div>
                 <hr />
             </div>
-            <div>
-                <p className="font-semibold text-sm sm:text-base">Quantity</p>
-                <div className="py-3 flex items-center">
-                    <button className="border p-2 sm:p-2">-</button>
-                    <span className="border px-4 py-2 sm:py-2">1</span>
-                    <button className="border p-2 sm:p-2">+</button>
-                </div>
+            <div className="py- ">
+                <h2 className="text-sm font-medium mb-2">Product Details</h2>
+                <ul className="text-sm space-y-1">
+                    <li>
+                        <strong>Fabric Type:</strong> {productData?.fabricType || "Not specified"}
+                    </li>
+                    <li>
+                        <strong>Description:</strong> {productData?.description || "No description available"}
+                    </li>
+                    <li>
+                        <strong>Stock:</strong> {productData?.stock > 0 ? `${productData.stock} items available` : "Out of stock"}
+                    </li>
+                </ul>
             </div>
 
+
+
             <div className="my-4 flex flex-col sm:flex-row gap-3">
-                <Link className="border border-black p-3 sm:px-[69px] text-sm sm:text-md rounded-xl bg-color1 hover:bg-darkcolor1 font-semibold hover:text-white text-center">
+                {/* <Link className="border border-black p-3 sm:px-[69px] text-sm sm:text-md rounded-xl bg-color1 hover:bg-darkcolor1 font-semibold hover:text-white text-center">
                     Add to Cart
-                </Link>
+                </Link> */}
+                <div className="text-center">
+                    {isInCart ? (
+                        <div className="text-sm p-2 px-2">
+                            <Link className="btn btn-primary btn-sm" to="/cart">
+                                <span className="text-green-500 font-medium">✔ Added to Cart</span>
+                                View Cart
+                            </Link>
+                        </div>
+                    ) : (
+                        <button
+                            className="border border-black p-3 sm:px-[69px] text-sm sm:text-md rounded-xl bg-color1 hover:bg-darkcolor1 font-semibold hover:text-white text-center"
+                            onClick={() => handleCart(productData)}
+                        >
+                            Add to Cart
+                        </button>
+                    )}
+
+
+                </div>
+
                 <Link className="border p-3 sm:px-[69px] text-white text-sm sm:text-md border-black rounded-xl bg-darkcolor1 hover:bg-opacity-95 font-semibold text-center">
                     Buy Now
                 </Link>

@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import ProductDetails from './components/ProductDetails';
 import productsRoutes from './routes/productsRoutes';
 import SingleProduct from './components/SingleProduct';
+import Cart from './components/Cart';
 
 function Main() {
   const location = useLocation();
@@ -46,6 +47,11 @@ const appRouter = createBrowserRouter([{
       path: "/newarrivals",
       element: <NewArrivalsProducts />
     },
+    {
+      path: "/cart",
+      element: <Cart />
+    },
+
   ]
 }])
 

@@ -4,13 +4,21 @@ import { FaInstagram, FaFacebook, FaLinkedin, FaYoutube, FaSearch, FaShoppingCar
 import { Link, useLocation } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import SearchBar from "./SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { trueToggle } from "../redux/slices/sideBarSlice";
 const Navbar = () => {
 
-    const cartCount = useSelector((store) => store.cart.items)
+    const cartCount = useSelector((store) => store?.cart?.items)
+    const dispatch = useDispatch()
     const location = useLocation()
     const homePage = location.pathname === "/";
+
+    useEffect(() => {
+        if (homePage) {
+            dispatch(trueToggle())
+        }
+    }, [homePage])
     return (
         <div>
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left px-4 sm:px-6 lg:px-10 py-2 bg-color1">
@@ -86,6 +94,7 @@ const Navbar = () => {
 
                 </div>
                 <div className="flex-none gap-3">
+
                     <div className="dropdown dropdown-end">
                         <div
                             tabIndex={0}
@@ -93,36 +102,42 @@ const Navbar = () => {
                             className="btn btn-ghost btn-circle"
                         >
                             <div className="indicator">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-5 w-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                    />
-                                </svg>
-                                <span className="badge badge-sm indicator-item">{cartCount?.length}</span>
+                                <Link to={`/cart`} >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-6 w-6"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                                        />
+                                    </svg>
+                                    <span className="badge badge-md bg-red-600 text-white indicator-item">{(cartCount) ? cartCount.length : 0}</span>
+                                </Link>
                             </div>
                         </div>
-                        <div
+
+                        {/* <div
                             tabIndex={0}
                             className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
                         >
                             <div className="card-body">
-                                <span className="text-lg font-bold">{cartCount.length} Items</span>
+                                <span className="text-lg font-bold ">{cartCount.length} Items</span>
                                 <span className="text-info">Subtotal: $999</span>
                                 <div className="card-actions">
-                                    <button className="btn btn-primary btn-block">View cart</button>
+                                    <Link to={`/cart`}
+                                        className="btn btn-primary btn-block">View cart</Link>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
+
+
                     <div className="dropdown dropdown-end">
                         <div
                             tabIndex={0}

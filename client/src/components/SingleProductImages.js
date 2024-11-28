@@ -4,6 +4,8 @@ import { GrLinkPrevious } from "react-icons/gr";
 import { GrLinkNext } from "react-icons/gr";
 
 const SingleProductImages = ({ productData }) => {
+
+
     const images = [DUMMY_IMG1, DUMMY_IMG2, DUMMY_IMG3, DUMMY_IMG4];
     const [mainImage, setMainImage] = useState(images[0]);
 
@@ -53,12 +55,13 @@ const SingleProductImages = ({ productData }) => {
                 </div>
 
                 <img
-                    className="w-full cursor-pointer sm:w-[90%] md:w-[75%] border-2 border-gray-300 rounded-md"
+                    className="relative w-full cursor-pointer sm:w-[90%] md:w-[75%] border-2 border-gray-300 rounded-md"
                     src={mainImage}
                     alt="Main"
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}
                 />
+
             </div>
 
             {zoomData.isZooming && (
