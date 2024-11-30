@@ -19,17 +19,17 @@ const validateProduct = (req) => {
         throw new Error('Price must be a positive number or zero.');
     }
 
-    if (!Array.isArray(images) || images.length === 0) {
-        throw new Error('Images must be an array with at least one image object.');
-    }
-    images.forEach((image, index) => {
-        if (!image.url || !validator.isURL(image.url.trim())) {
-            throw new Error(`Image at index ${index} must have a valid URL.`);
-        }
-        if (image.altText && !validator.isLength(image.altText.trim(), { max: 100 })) {
-            throw new Error(`Alt text at index ${index} cannot exceed 100 characters.`);
-        }
-    });
+    // if (!Array.isArray(images) || images.length === 0) {
+    //     throw new Error('Images must be an array with at least one image object.');
+    // }
+    // images.forEach((image, index) => {
+    //     if (!image.url || !validator.isURL(image.url.trim())) {
+    //         throw new Error(`Image at index ${index} must have a valid URL.`);
+    //     }
+    //     if (image.altText && !validator.isLength(image.altText.trim(), { max: 100 })) {
+    //         throw new Error(`Alt text at index ${index} cannot exceed 100 characters.`);
+    //     }
+    // });
 
     if (fabricType && !validator.isLength(fabricType.trim(), { max: 50 })) {
         throw new Error('Fabric type cannot exceed 50 characters.');
@@ -44,13 +44,14 @@ const validateProduct = (req) => {
         name: name.trim(),
         description: description ? description.trim() : undefined,
         price: parseFloat(price),
-        images: images.map((image) => ({
-            url: image.url.trim(),
-            altText: image.altText ? image.altText.trim() : undefined,
-        })),
+        // images: images.map((image) => ({
+        //     url: image.url.trim(),
+        //     altText: image.altText ? image.altText.trim() : undefined,
+        // })),
         fabricType: fabricType ? fabricType.trim() : undefined,
         stock: parseInt(stock),
     };
 };
 
 module.exports = { validateProduct }
+

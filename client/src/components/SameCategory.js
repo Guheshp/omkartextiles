@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addCart } from '../redux/slices/cartSlice'
+import { IMAGE_BASE_URL } from '../utils/Constants'
 
 
 const SameCategory = ({ category }) => {
@@ -40,7 +41,7 @@ const SameCategory = ({ category }) => {
                 <Link to={`/product/${product?._id}`}>
                     <img
                         className="w-full object-cover rounded-md"
-                        src="https://royalanarkali.com/wp-content/uploads/2024/03/Adorable-Blue-Color-Lichi-Silk-Gold-And-Silver-Zari-Weaving-Saree-scaled.jpeg"
+                        src={IMAGE_BASE_URL + product?.images?.[0]?.url}
                         alt={product?.images?.[0]?.altText || 'Product Image'}
                     />
                     <div className="mt-4 px-2">

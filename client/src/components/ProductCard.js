@@ -4,9 +4,11 @@ import { BsBagCheckFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCart } from '../redux/slices/cartSlice';
+import { IMAGE_BASE_URL } from '../utils/Constants';
 
 const ProductCard = ({ product }) => {
-
+    const productImages = product?.images
+    console.log("productImages", productImages)
     const dispatch = useDispatch()
     const cartItems = useSelector((store) => store.cart.items)
     const isInCart = cartItems.some((item) => item._id === product._id);
@@ -31,12 +33,12 @@ const ProductCard = ({ product }) => {
     }
 
     return (
-        <div className="rounded-lg hover:shadow-2xl transition duration-200 max-w-xs  w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
+        <div className="rounded-lg hover:shadow-2xl transition duration-200 max-w-xs w-full sm:max-w-md md:max-w-lg lg:max-w-xl bg-white shadow-sm">
             <Link to={`/product/${product?._id}`}>
                 <img
-                    className="w-full object-cover rounded-md"
-                    src="https://royalanarkali.com/wp-content/uploads/2024/03/Adorable-Blue-Color-Lichi-Silk-Gold-And-Silver-Zari-Weaving-Saree-scaled.jpeg"
-                    alt={product?.images?.[0]?.altText || 'Product Image'}
+                    className="w-full sm:w-52 md:w-64 lg:w-72 rounded-md object-cover" // Responsive width and object cover
+                    src={IMAGE_BASE_URL + (productImages?.[0]?.url || '')}
+                    alt={productImages?.[0]?.altText || 'Product Image'}
                 />
                 <div className="mt-4 px-2">
                     <p className="text-[10px] font-light text-black">
@@ -76,6 +78,7 @@ const ProductCard = ({ product }) => {
                 )}
             </div>
         </div>
+
 
     );
 };

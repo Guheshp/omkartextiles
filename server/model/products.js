@@ -29,11 +29,6 @@ const productSchema = new mongoose.Schema({
             url: {
                 type: String,
                 required: [true, "Image URL is required"],
-                validate(value) {
-                    if (!validator.isURL(value)) {
-                        throw new Error("Please provide a valid URL for the product image: " + value)
-                    }
-                }
             },
             altText: {
                 type: String,

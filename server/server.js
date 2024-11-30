@@ -3,9 +3,8 @@ const { connectDB } = require("./config/database")
 const app = express()
 const cors = require("cors")
 require("dotenv").config()
+const path = require("path")
 const PORT = process.env.PORT
-
-
 
 
 app.use(express.json())
@@ -19,9 +18,13 @@ app.use(cors({
 
 const categoryRouter = require("./router/category.router")
 const productRouter = require("./router/product.router")
+const sliderRouter = require("./router/slider.router")
 
 app.use("/api", categoryRouter)
 app.use("/api", productRouter)
+app.use("/api", sliderRouter)
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 app.get("/ot-test", (req, res) => {

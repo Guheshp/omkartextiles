@@ -6,6 +6,7 @@ import Pagination from './Pagination';
 const AllProducts = () => {
     const { allProducts, load, totalProducts, page, setPage } = useAllProducts();
     // console.log('allProducts', allProducts);
+    const sortedProducts = allProducts?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     if (load) return <h1 className="text-center text-xl font-semibold my-5">Loading...</h1>;
 
@@ -16,8 +17,8 @@ const AllProducts = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {allProducts && allProducts.length > 0 &&
-                    allProducts?.sort((a, b) => b._id - a._id)?.slice((page - 1) * 12, page * 12)?.map((data, index) => (
+                {sortedProducts && sortedProducts.length > 0 &&
+                    sortedProducts?.slice((page - 1) * 12, page * 12)?.map((data, index) => (
                         <React.Fragment key={index}>
                             {data?.newArrival ? (
                                 <NewArrivals product={data} />
@@ -30,7 +31,7 @@ const AllProducts = () => {
             </div>
 
             <div className='text-center my-10'>
-                <Pagination products={allProducts} page={page} setPage={setPage} />
+                <Pagination products={sortedProducts} page={page} setPage={setPage} />
             </div>
         </div>
 

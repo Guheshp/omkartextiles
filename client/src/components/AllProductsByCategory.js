@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { IMAGE_BASE_URL } from '../utils/Constants';
 
 const AllProductsByCategory = ({ product }) => {
 
@@ -24,7 +25,7 @@ const AllProductsByCategory = ({ product }) => {
                 <Link to={`/products/${product?._id}`}>
                     <img
                         className="w-full object-cover rounded-md"
-                        src="https://royalanarkali.com/wp-content/uploads/2024/03/Adorable-Blue-Color-Lichi-Silk-Gold-And-Silver-Zari-Weaving-Saree-scaled.jpeg"
+                        src={IMAGE_BASE_URL + product?.images?.[0]?.url}
                         alt={product?.images?.[0]?.altText || 'Product Image'}
                     />
                     <div className="mt-4 px-2">

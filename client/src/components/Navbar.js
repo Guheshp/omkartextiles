@@ -7,6 +7,8 @@ import SearchBar from "./SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { trueToggle } from "../redux/slices/sideBarSlice";
+import { FaRegUser } from "react-icons/fa";
+
 const Navbar = () => {
 
     const cartCount = useSelector((store) => store?.cart?.items)
@@ -87,7 +89,6 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="flex-none">
-                    {/* Search Bar for Desktop */}
                     <div className="form-control hidden lg:block">
                         <SearchBar />
                     </div>
@@ -144,11 +145,12 @@ const Navbar = () => {
                             role="button"
                             className="btn btn-ghost btn-circle avatar"
                         >
-                            <div className="w-10 rounded-full">
-                                <img
+                            <div className="w-10 rounded-full border">
+                                {/* <img
                                     alt="User Avatar"
                                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                                />
+                                /> */}
+                                <FaRegUser className="size-6 mt-2 ml-[7px]" />
                             </div>
                         </div>
                         <ul

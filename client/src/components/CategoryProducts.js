@@ -7,12 +7,14 @@ const CategoryProducts = () => {
     const { id } = useParams();
 
     const { fetchCategories, category = [], loading, categoryProductCount } = useCategories();
+
+    const sortedProducts = category?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
     useEffect(() => {
         if (id) {
             fetchCategories(id);
         }
     }, [id]);
-    // console.log("category", category)
 
     if (loading || category?.length < 0) return <h1 className="text-center text-xl font-semibold my-5">Loading...</h1>;
 
@@ -23,8 +25,8 @@ const CategoryProducts = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {category && category.length > 0 ? (
-                    category.map((data, index) => (
+                {sortedProducts && sortedProducts.length > 0 ? (
+                    sortedProducts.map((data, index) => (
                         <AllProductsByCategory key={index} product={data} />
                     ))
                 ) : (

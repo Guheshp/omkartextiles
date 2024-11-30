@@ -2,29 +2,108 @@ const { Product } = require("../model/products")
 const { Category } = require("../model/categories");
 const { validateProduct } = require("../validator/validateProduct");
 const { default: mongoose } = require("mongoose");
+const multer = require("multer")
+const path = require("path");
+
+// const createProduct = async (req, res) => {
+//     try {
+//         validateProduct(req)
+//         const { categoryId, name, description, price, images, fabricType, discount, stock } = req.body;
+
+//         const categoryExists = await Category.findById(categoryId);
+//         if (!categoryExists) {
+//             return res.status(404).json({ success: false, message: "Category not found." });
+//         }
+
+//         const product = new Product({
+//             categoryId,
+//             name,
+//             description,
+//             price,
+//             images,
+//             discount,
+//             fabricType,
+//             stock
+//         });
+
+//         await product.save();
+//         res.status(201).json({
+//             success: true,
+//             message: "Product created successfully!",
+//             data: product
+//         });
+//     } catch (error) {
+//         res.status(400).json({
+//             success: false,
+//             message: "Error creating product.",
+//             error: "ERROR: " + error.message
+//         });
+//     }
+// };
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/product');
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 1000000 },
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|jpg|png|/;
+        const mimeType = fileTypes.test(file.mimetype);
+        const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+
+        if (mimeType && extname) {
+            return cb(null, true);
+        }
+        cb(new Error('Please upload a file with a valid format (jpeg, jpg, png)'));
+    }
+}).array('images', 4);
+
 
 const createProduct = async (req, res) => {
     try {
-        validateProduct(req)
-        const { categoryId, name, description, price, images, fabricType, discount, stock } = req.body;
+
+        validateProduct(req);
+
+        const { categoryId, name, description, price, fabricType, discount, stock } = req.body;
 
         const categoryExists = await Category.findById(categoryId);
         if (!categoryExists) {
             return res.status(404).json({ success: false, message: "Category not found." });
         }
 
+        const images = req.files
+            ? req.files.map((file, index) => ({
+                url: file.path,
+                altText: req.body.altText && req.body.altText[index] ? req.body.altText[index] : ""
+            }))
+            : [];
+
+        images.forEach(image => {
+            if (image.altText && image.altText.length > 100) {
+                return res.status(400).json({ success: false, message: "Alt text cannot exceed 100 characters." });
+            }
+        });
+
         const product = new Product({
             categoryId,
             name,
             description,
             price,
-            images,
+            images: images,
             discount,
             fabricType,
             stock
         });
 
         await product.save();
+
         res.status(201).json({
             success: true,
             message: "Product created successfully!",
@@ -38,6 +117,7 @@ const createProduct = async (req, res) => {
         });
     }
 };
+
 
 const getAllProducts = async (req, res) => {
     const { page = 1, limit = 12, search = "" } = req.query
@@ -172,5 +252,6 @@ module.exports = {
     getProductById,
     deleteProduct,
     deleteProduct,
-    newArrivals
+    newArrivals,
+    upload
 }

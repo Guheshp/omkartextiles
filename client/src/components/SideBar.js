@@ -5,11 +5,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 const SideBar = ({ categories }) => {
     // console.log("categories", categories);
-
     const location = useLocation()
 
     const { fetchCategories, category, loading } = useCategories();
     // console.log("category..", category);
+
     const [productTypeToggle, setProductTypeToggle] = useState(false)
     const [newArrivalsToggle, setNewArrivalsToggle] = useState(false)
 
@@ -20,7 +20,6 @@ const SideBar = ({ categories }) => {
     const newArrivals = () => {
         setNewArrivalsToggle(!newArrivalsToggle)
     }
-
 
     return (
         <div className="w-60 min-h-screen">
@@ -61,9 +60,6 @@ const SideBar = ({ categories }) => {
                     ))}
                 </div>
             )}
-
-
-
         </div>
     );
 };

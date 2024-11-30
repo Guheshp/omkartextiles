@@ -1,4 +1,5 @@
 export const BASE_URL = "http://localhost:7878/api/"
+export const IMAGE_BASE_URL = "http://localhost:7878/"
 
 export const WHATS_APP_ICON = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png?20220228223904"
 
