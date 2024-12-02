@@ -19,10 +19,12 @@ app.use(cors({
 const categoryRouter = require("./router/category.router")
 const productRouter = require("./router/product.router")
 const sliderRouter = require("./router/slider.router")
+const moneyPickSlider = require("./router/moneypick.router")
 
 app.use("/api", categoryRouter)
 app.use("/api", productRouter)
 app.use("/api", sliderRouter)
+app.use("/api", moneyPickSlider)
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

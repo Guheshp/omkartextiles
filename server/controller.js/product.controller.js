@@ -1,5 +1,6 @@
 const { Product } = require("../model/products")
 const { Category } = require("../model/categories");
+const { MoneyPicks } = require("../model/moneypicks.model")
 const { validateProduct } = require("../validator/validateProduct");
 const { default: mongoose } = require("mongoose");
 const multer = require("multer")
@@ -71,7 +72,7 @@ const createProduct = async (req, res) => {
 
         validateProduct(req);
 
-        const { categoryId, name, description, price, fabricType, discount, stock } = req.body;
+        const { categoryId, name, description, price, fabricType, discount, stock, newArrival } = req.body;
 
         const categoryExists = await Category.findById(categoryId);
         if (!categoryExists) {
@@ -99,7 +100,8 @@ const createProduct = async (req, res) => {
             images: images,
             discount,
             fabricType,
-            stock
+            stock,
+            newArrival
         });
 
         await product.save();
@@ -244,6 +246,60 @@ const newArrivals = async (req, res) => {
 };
 
 
+const createMoneyPickProduct = async (req, res) => {
+    try {
+
+        validateProduct(req);
+
+        const { categoryId, name, description, price, fabricType, discount, stock, newArrival } = req.body;
+
+        const moneyPickExists = await MoneyPicks.findById({ _id: categoryId });
+        if (!moneyPickExists) {
+            return res.status(404).json({ success: false, message: "moneyPickExists not found." });
+        }
+
+        const images = req.files
+            ? req.files.map((file, index) => ({
+                url: file.path,
+                altText: req.body.altText && req.body.altText[index] ? req.body.altText[index] : ""
+            }))
+            : [];
+
+        images.forEach(image => {
+            if (image.altText && image.altText.length > 100) {
+                return res.status(400).json({ success: false, message: "Alt text cannot exceed 100 characters." });
+            }
+        });
+
+        const product = new Product({
+            categoryId,
+            name,
+            description,
+            price,
+            images: images,
+            discount,
+            fabricType,
+            stock,
+            newArrival
+        });
+
+        await product.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Product created successfully!",
+            data: product
+        });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "Error creating product.",
+            error: "ERROR: " + error.message
+        });
+    }
+};
+
+
 // update is pending 
 
 module.exports = {
@@ -253,5 +309,6 @@ module.exports = {
     deleteProduct,
     deleteProduct,
     newArrivals,
-    upload
+    upload,
+    createMoneyPickProduct
 }

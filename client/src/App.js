@@ -12,6 +12,7 @@ import productsRoutes from './routes/productsRoutes';
 import SingleProduct from './components/SingleProduct';
 import Cart from './components/Cart';
 import Home from './components/Home';
+import UnderPrice from './components/UnderPrice';
 
 function Main() {
   const location = useLocation();
@@ -32,12 +33,12 @@ const appRouter = createBrowserRouter([{
   path: "/",
   element: <Main />,
   children: [
+    // {
+    //   path: "/",
+    //   element: <Home />
+    // },
     {
       path: "/",
-      element: <Home />
-    },
-    {
-      path: "/allproducts",
       element: <AllProducts />
     },
     {
@@ -55,6 +56,10 @@ const appRouter = createBrowserRouter([{
     {
       path: "/cart",
       element: <Cart />
+    },
+    {
+      path: "/collections/:id",
+      element: <UnderPrice />
     },
 
   ]

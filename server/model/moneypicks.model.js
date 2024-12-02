@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const moneyPicks = new mongoose.Schema({
     name: {
@@ -15,13 +15,10 @@ const moneyPicks = new mongoose.Schema({
     },
     categoryImage: {
         type: String,
-        validate(value) {
-            if (!validator.isURL(value)) {
-                throw new Error("Please provide a valid URL for the category image: " + value)
-            }
-        }
+
     }
 })
 
 const MoneyPicks = mongoose.model("MoneyPicks", moneyPicks)
+
 module.exports = { MoneyPicks }
