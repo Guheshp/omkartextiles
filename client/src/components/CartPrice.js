@@ -21,7 +21,7 @@ const CartPrice = () => {
     };
 
     const cartProducts = useSelector((store) => store.cart.items)
-    console.log("cartProducts", cartProducts)
+    // console.log("cartProducts", cartProducts)
     const { totalCartPrice, totalDiscount } = cartProducts.reduce(
         (acc, product) => {
             const discountAmount = (product.price * (product.discount || 0)) / 100;

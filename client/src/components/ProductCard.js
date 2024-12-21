@@ -8,7 +8,7 @@ import { IMAGE_BASE_URL } from '../utils/Constants';
 
 const ProductCard = ({ product }) => {
     const productImages = product?.images
-    console.log("productImages", productImages)
+    // console.log("productImages", productImages)
     const dispatch = useDispatch()
     const cartItems = useSelector((store) => store.cart.items)
     const isInCart = cartItems.some((item) => item._id === product._id);
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
     };
 
     const handleCart = (item) => {
-        console.log(item)
+        // console.log(item)
         dispatch(addCart(item))
     }
 

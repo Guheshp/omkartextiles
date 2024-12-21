@@ -12,7 +12,7 @@ const useFetchNewArrivals = () => {
             const json = await res.json()
             const data = json
             setNewArrivals(data)
-            console.log("newarrivasl", data)
+            // console.log("newarrivasl", data)
         } catch (error) {
             console.error(error)
         } finally {

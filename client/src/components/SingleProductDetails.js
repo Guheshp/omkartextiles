@@ -14,7 +14,7 @@ const SingleProductDetails = ({ productData }) => {
     const isInCart = cartItems.some((item) => item._id === productData._id);
 
     const handleCart = (item) => {
-        console.log(item)
+        // console.log(item)
         dispatch(addCart(item))
     }
 

@@ -254,6 +254,7 @@ const createMoneyPickProduct = async (req, res) => {
         const { categoryId, name, description, price, fabricType, discount, stock, newArrival } = req.body;
 
         const moneyPickExists = await MoneyPicks.findById({ _id: categoryId });
+        console.log("moneyPickExists", moneyPickExists)
         if (!moneyPickExists) {
             return res.status(404).json({ success: false, message: "moneyPickExists not found." });
         }

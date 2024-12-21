@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { IMAGE_BASE_URL } from '../utils/Constants'
 
 const Slider = ({ sliderData }) => {
-    console.log("sliderData", sliderData)
     const data = sliderData && sliderData[0]
     const dataImage = sliderData && sliderData[0]?.image
 

@@ -33,12 +33,12 @@ const appRouter = createBrowserRouter([{
   path: "/",
   element: <Main />,
   children: [
-    // {
-    //   path: "/",
-    //   element: <Home />
-    // },
     {
       path: "/",
+      element: <Home />
+    },
+    {
+      path: "/allproducts",
       element: <AllProducts />
     },
     {

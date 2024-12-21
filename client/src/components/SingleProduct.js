@@ -14,7 +14,7 @@ const SingleProduct = () => {
     const categoryId = productData?.categoryId?._id;
 
     const { fetchCategories, category, loading, error } = useCategories();
-    console.log("category...", category)
+    // console.log("category...", category)
 
     const dispatch = useDispatch()
 
